@@ -1,12 +1,15 @@
 import {
   Grid, TextField, Typography, Checkbox, Box, Alert, InputLabel, MenuItem, Select, FormControl, FormLabel, RadioGroup, Radio, FormGroup,
-  Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, FormControlLabel
+  Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, FormControlLabel, Button
 } from '@mui/material';
 import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {styled} from '@mui/material/styles'
 
-
+const Input = styled('input')({
+  display:'none',
+})
 
 function App() {
 
@@ -15,6 +18,13 @@ function App() {
   const [gender,setGender]= useState()
   const [startDate, setStartDate] = useState(new Date())
   const [st,setSt] = useState('')
+  const [location,setLocation]=useState([])
+
+  const handleLocation = (e) =>{
+      let data = location
+      data.push(e.target.value)
+      setLocation(data)
+  }
 
   return (
     <>
@@ -78,8 +88,31 @@ function App() {
               </RadioGroup>
             </FormControl>
 
+         <FormControl component='fieldset' fullWidth margin='normal'>
+         <FormLabel id="preferred-location" component='legend' >Preferred Job Location</FormLabel>
+         <FormGroup row>
+         <FormControlLabel  control={<Checkbox />} label="Delhi" value="delhi" onChange={(e)=>handleLocation(e)}/>
+         <FormControlLabel  control={<Checkbox />} label="Mumbai" value="mumbai" onChange={(e)=>handleLocation(e)}/>
+         <FormControlLabel  control={<Checkbox />} label="Banglore" value="banglore" onChange={(e)=>handleLocation(e)}/>
+         <FormControlLabel  control={<Checkbox />} label="Kolkata" value="kolkata" onChange={(e)=>handleLocation(e)}/>
+         </FormGroup>
+         </FormControl>
 
 
+         <Stack direction="row" alignItems="center" spacing={4}>
+
+          <label htmlFor='profile-photo'>
+            <Input accept="image/*" id="profile-photo" type="file" />
+            <Button variant='contained' component="span">UPLOAD PHOTO</Button>
+          </label>
+
+          <label htmlFor='resume-file'>
+            <Input accept="doc/*" id="resume-file" type="file" />
+            <Button variant='contained' component="span">UPLOAD RESUME</Button>
+          </label>
+         </Stack>
+       
+         <Button type='submit' variant='contained' sx={{mt:3 , mb:2, px:5}} color='error'>Submit</Button>
           </Box>
         </Grid>
 
